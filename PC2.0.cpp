@@ -221,6 +221,7 @@ double Clubs::get_club_distance() {
 
 
 
+    double distance = 0;
 
     cout << "Starting club setup..... \n";
 
@@ -232,7 +233,7 @@ double Clubs::get_club_distance() {
     for (int k = 0; k < 9; k++) {
 
 
-        double distance = 0;
+        //double distance = 0;
 
         //gets upper club distance
         cout << "Enter upper distance for, ";
@@ -340,7 +341,6 @@ double Clubs::get_club_distance() {
     int i = 0;
 
     for (int k = 0; k < 9; k++) {
-        double distance = 0;
 
 
 
@@ -352,16 +352,17 @@ double Clubs::get_club_distance() {
 
 
 
-
+        //cout << "hit check\n";
         good_distance = check_distanceV2(distance, good_distance, i);
 
-        cout << "good distance = " << good_distance <<endl;
+
+        //cout << "good distance = " << good_distance <<endl;
 
         club_distancesV2[i] = good_distance;
-        cout << "club_distance at i = " << club_distancesV2[i] <<endl;
-
+        //cout << "club_distance at i = " << club_distancesV2[i] <<endl;
 
         i++;
+
 
 
         //error checking for upper distance
@@ -386,24 +387,25 @@ double Clubs::get_club_distance() {
 
 }
 
-double Clubs::check_distanceV2(double distance, double good_distance, int i) {
+
+double Clubs::check_distanceV2(double distance, double good_distance , int i) {
 
     //need to add distance
     //check to make sure the higher club range is lower than the previous clubs low range
     //could possibly do this by setting a temp for the first index and using club_distance[i-1] for the rest of the setup
 
 
-    cout << "i = " << i <<endl;
-    if (i > 1) {
+    //cout << "i = " << i <<endl;
+    if (i >= 1) {
 
-        cout << "previous club distance = " << club_distancesV2[i - 1] <<endl;
-        while (good_distance < distance) {
+        //cout << "previous club distance = " << club_distancesV2[i-1] <<endl;
+        while (good_distance <= distance) {
 
             cout << "\n";
             cout << "***ERROR****\n";
             cout << "\n";
 
-            cout << "Upper club distance needs to be lower than the previous clubs distance (" << club_distancesV2[i - 1] << ") try again:" << '\n';
+            cout << "Upper club distance needs to be lower than the previous clubs distance (" << club_distancesV2[i-1] << ") try again:" << '\n';
             cin.clear();
             cin.ignore();
             cin >> distance;

@@ -36,5 +36,4 @@ ____________________________________
 
 SAVING A ROUND
 
-When you complete a round, an outfile feature allows you to save your round within a textfile on your computer (phone hopefully in the future) if you choose.
-
+When you complete a round, an outfile feature allows you to save your round within a text file on your computer (phone hopefully in the future) if you choose.
