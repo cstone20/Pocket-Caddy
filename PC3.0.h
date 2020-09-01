@@ -78,9 +78,9 @@ public:
 
 	//version 2 error checking
 	double check_distanceV2(double distance, double good_distance, int i);
-	double get_clubV2(double t);
+	double get_clubV2();
 
 
 	//choose club based on distance
-	double get_club(double t);
+	double get_club();
 };
