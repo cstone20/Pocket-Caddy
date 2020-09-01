@@ -1,4 +1,4 @@
-// V6.0.cpp : This file does contain the 'main' function. Program execution begins and ends there.
+// PC3.0.cpp : This file does contain the 'main' function. Program execution begins and ends there.
 
 #include <iostream>
 #include <fstream>
@@ -7,21 +7,180 @@
 
 using namespace std;
 
+
 #define VERSION_1  1
 #define VERSION_2  2
 
 #define VERSION  2
 
+/** \mainpage Pocket Caddy Version 3
+* \section v1 Introduction
+
+        Pocket Caddy is a simple console application to keep simple, as well as some advanced statistics such as:
+
+        Strokes (score)
+
+        Course yardage
+
+        Putts
+
+        GIR (greens in regulation) with percentage
+
+        Fairways hit with percentage
+
+        Course par
+
+        VERSIONS
+
+        The application has 2 versions, the versions differetiate mostly within the club setup portion and how collisions happen choosing a yardage.
+        Version 1 creates a range for each clubs yardage, using upper and lower distances entered for each particular club.
+        Version 2 uses an average distance for each club, which creates a range linking each clubs average distance to the next.
+
+        PLAYING A ROUND
+
+        You will start by choosing 9 or 18 holes and setting up club distances.
+        After that simply follow prompts given throughout each hole to get a detailed statistical summary of your round.
+
+        SAVING A ROUND
+
+        When you complete a round, an outfile feature allows you to save your round within a text file on your computer
+        (phone hopefully in the future) if you choose.
+
+* \section v2 Club Setup
+
+***** \subsection step1 Club Setup Version 1
+
+        Uses macro to choose pre determined version.
+
+        Version 1 creates a range for each clubs yardage,
+        using upper and lower distances entered for each particular club.
+
+***** \subsection step2 Club Setup Version 2
+
+        Uses macro to choose pre determined version.
+
+        Version 2 uses an average distance for each club,
+        which creates a range linking each clubs average distance to the next.
+
+***** \subsection step3 Club Setup Error Checking
+
+        Functions check_distance, check_distance2 ane check_distanceV2 to check club distance inputs.
+
+        check_distanceV2 makes sure club distance is lower than the previous clubs distance.
+
+        check_distance and check_distance2 makes sure the previous clubs lower distance
+        is higher than the current clubs upper distance.
+
+        All functions check to make sure the club distance is atleast over 30
+        and lower than 400.
+
+        Version 2 only uses one funciton for checking compared to 2
+        for version 1.
+
+
+
+* \section v3 Stats
+
+***** \subsection step4 get_holes
+
+        Aquires the amount of holes to be played.
+
+        Uses error checking to make sure
+        amount of holes input is 9 or 18.
+
+***** \subsection step5 get_par
+
+        Aquires the number of par for the hole.
+
+        Uses error checking to make sure
+        par input is 3, 4, or 5.
+
+
+***** \subsection step6 get_yardage
+
+        Aquires the yardage of the hole being played.
+
+        Uses error checking to make sure
+        yardage is above 75 and under 700 yards.
+
+
+***** \subsection step7 get_fairway_hit
+
+
+        Adds 1 for a fairway hit on that particular hole.
+
+        If hole is a par 3 this function is skipped
+        since par 3 fairways do not exist.
+
+
+***** \subsection step8 get_GIR:
+
+        Counter for Greens hit in regulation.
+
+        Adds 1 for a green hit in regulation.
+
+        This function should be invoked for
+        each hole since each hole has a green,
+        unlike fairways.
+
+
+***** \subsection step9 get_putts
+
+        Uses error checking to make sure
+        amount of putts is under 11.
+
+        Putts could be 0 on the rare chance of a hole in 1.
+
+
+***** \subsection step10 get_strokes
+
+        Gets total strokes for the hole.
+
+        Error checking for total strokes
+        must be between 1 and 10.
+
+        Total strokes should be atleast 1 more
+        than putt amount.
+
+        Unless putt amount is 10 for that particular hole
+        then total strokes will be 10.
+
+***** \subsection step11 Summary
+
+        Summary function outputs various stats after each holes.
+
+        Outputs stats such as; Overall score, total strokes, total yards, fairway hit percentage,
+        GIR (green in regulation) percentage, and total putts.
+
+* \section v4 Outfile Summary
+
+        Outfile summary allows the user to save the round to a text file.
+
+        The outfile feature allows the user to save all stats gathered
+        throughout the round.
+
+        Also allows the user to save the date of the round and the course played at.
+
+*/
+//END MAINPAGE
+
+
 
 double STATS::get_holes() {
 
-    //Holes STATS;
+    /*
+    Gets the amount of holes to be played
+
+    Uses error checking to make sure
+    amount of holes input is 9 or 18
+    */
 
 
     cout << "Enter number of holes (9 or 18): " << '\n';
     cin >> holes;
 
-    //error checking
+
+    //error checking for number of holes must be 9 or 18
     while (!cin || holes != 9.0 && holes != 18.0) {
 
         cout << "\n";
@@ -41,15 +200,21 @@ double STATS::get_holes() {
 
 }
 
-
-
 double STATS::get_par(double i) {
+
+    /*
+    Gets the number of par for the hole
+
+    Uses error checking to make sure
+    par input is 3, 4, or 5
+    */
 
 
     cout << "Enter par for hole " << i << ": " << '\n';
     cin >> par;
 
-    //error checking
+
+    //error checking for par must be 3,4 or 5
     while (!cin || par != 3.0 && par != 4.0 && par != 5.0) {
 
         cout << "\n";
@@ -70,11 +235,20 @@ double STATS::get_par(double i) {
 
 
 double STATS::get_yardage(double i){
+    /*
+    Gets the yardage of the hole being played
+
+    Uses error checking to make sure
+    yardage is above 75 and under 700 yards
+    */
+
+
     cout << "Enter yardage for hole " << i << ": " << '\n';
 
     cin >> yardage;
 
-    //error checking
+
+    //error checking yardage must be between 75 and 700 yards
     while (!cin || yardage <= 75.0 || yardage >= 700.0) {
 
         cout << "\n";
@@ -96,14 +270,22 @@ double STATS::get_yardage(double i){
 
 
 
-
 double  STATS::get_fairway_hit(double i) {
 
+    /*
+    Counter for fairways hit
+
+    Adds 1 for a fairway hit on that particular hole
+
+    If hole is a par 3 this function is skipped
+    since par 3 fairways do not exist
+    */
 
     cout << "Did you hit the Fairway on hole: " << i << " (1 yes , 0 no) " << '\n';
     cin >> hit;
 
-    // error checking
+
+    //error checking for correct input must be 0 or 1
     while (!cin || hit != 0.0 && hit != 1.0) {
 
         cout << "\n";
@@ -123,14 +305,23 @@ double  STATS::get_fairway_hit(double i) {
 
 
 
-
 double STATS::get_GIR(double i) {
 
+    /*
+    Counter for GIR
+
+    Adds 1 for a green hit in regulation
+
+    This function should be invoked for
+    each hole since each hole has a green,
+    unlike fairways
+    */
 
     cout << "Did you hit the green in regulation on hole: " << i << " (1 yes, 0 no)" << '\n';
     cin >> gir;
 
-    //error checking
+
+    //error checking for GIR must be 1 or 0
     while (!cin || gir != 0.0 && gir != 1.0) {
 
         cout << "\n";
@@ -149,14 +340,22 @@ double STATS::get_GIR(double i) {
 
 }
 
-
 double STATS::get_putts(double i) {
 
+    /*
+    Gets amount of putts for the hole
+
+    Uses error checking to make sure
+    amount of putts is under 11
+
+    Putts could be 0 on the rare chance of a hole in 1
+    */
 
     cout << "Enter number of putts for hole " << i << ":\n";
     cin >> putts;
 
-    //error checking
+
+    //error checking for putts must be under 10
     while (!cin || putts > 10) {
 
         cout << "\n";
@@ -172,16 +371,32 @@ double STATS::get_putts(double i) {
 
 }
 
-
 double STATS::get_strokes(double i) {
+
+    /*
+    Gets total strokes for the hole
+
+    Error checking for total strokes
+    must be between 1 and 10
+
+    Total strokes should be atleast 1 more
+    than putt amount.
+    Unless putt amount is 10 for that particular hole
+    then total strokes should be 10
+    (needs to be added)
+    */
 
     cout << "Enter total strokes for hole " << i << ":\n";
     cin >> strokes;
 
-    //error checking
+
+    //error checking for strokes must be atleast 1 and under 10
     while (!cin || strokes < 1.0 || strokes > 10.0) {
 
-        //if strokes is over 10
+
+        //if strokes are over 10
+        //else must be over 1
+
         if (strokes > 10) {
 
             cout << "\n";
@@ -193,7 +408,7 @@ double STATS::get_strokes(double i) {
             cin.ignore();
             cin >> strokes;
         }
-        //if strokes is under 1
+
         else {
 
             cout << "\n";
@@ -216,9 +431,21 @@ double STATS::get_strokes(double i) {
 
 
 
+
 double Clubs::get_club_distance() {
 
 
+    /*
+    Club setup for both versions
+
+    Uses macro to choose pre determined version
+
+    Version 1 creates a range for each clubs yardage,
+    using upper and lower distances entered for each particular club.
+
+    Version 2 uses an average distance for each club,
+    which creates a range linking each clubs average distance to the next.
+    */
 
 
     double distance = 0;
@@ -226,22 +453,22 @@ double Clubs::get_club_distance() {
     cout << "Starting club setup..... \n";
 
 
+
+    //macro to check for version
+
     #if VERSION == VERSION_1
+
     int i = 0;
 
-    //loops through the 9 clubs
     for (int k = 0; k < 9; k++) {
 
 
-        //double distance = 0;
 
-        //gets upper club distance
         cout << "Enter upper distance for, ";
 
         cout << clubs[k] << " : ";
         cin >> distance;
 
-        //error checking for upper distance
         good_distance1 = check_distance(distance, club_distances, i);
 
 
@@ -287,8 +514,12 @@ double Clubs::get_club_distance() {
     HG = club_distances[16];
     LG = club_distances[17];
 
+
+
 /*
+
     //hard testing for club distances
+
     HD = 310;
     LD = 280;
     H4 = 280;
@@ -307,37 +538,14 @@ double Clubs::get_club_distance() {
     LP = 110;
     HG = 110;
     LG = 80;
-    //Testing
-    cout << HD << '\n';
-    cout << LD << '\n';
-    cout << H4 << '\n';
-    cout << L4 << '\n';
-    cout << H5 << '\n';
-    cout << L5 << '\n';
-    cout << H6 << '\n';
-    cout << L6 << '\n';
-    cout << H7 << '\n';
-    cout << L7 << '\n';
-    cout << H8 << '\n';
-    cout << L8 << '\n';
-    cout << H9 << '\n';
-    cout << L9 << '\n';
-    cout << HP << '\n';
-    cout << LP << '\n';
-    cout << HG << '\n';
-    cout << LG << '\n';
-*/
 
-/*
-    //testing
-    for (int j = 0; j < 17; j++) {
-        cout << club_distances[j] << '\n';
-    }
 */
 
 
 
     #else
+
+
     int i = 0;
 
     for (int k = 0; k < 9; k++) {
@@ -350,24 +558,17 @@ double Clubs::get_club_distance() {
         cout << clubs[k] << " : ";
         cin >> distance;
 
-
-
-        //cout << "hit check\n";
         good_distance = check_distanceV2(distance, good_distance, i);
 
 
-        //cout << "good distance = " << good_distance <<endl;
-
         club_distancesV2[i] = good_distance;
-        //cout << "club_distance at i = " << club_distancesV2[i] <<endl;
 
         i++;
 
 
-
-        //error checking for upper distance
     }
 
+    //assign distances
     D = club_distancesV2[0];
     I4 = club_distancesV2[1];
     I5 = club_distancesV2[2];
@@ -379,6 +580,22 @@ double Clubs::get_club_distance() {
     GW = club_distancesV2[8];
 
 
+
+/*
+
+    //Hard testing for club distances
+    D = 250;
+    I4 = 200;
+    I5 = 180;
+    I6 = 170;
+    I7 = 160;
+    I8 = 150;
+    I9 = 130;
+    PW = 110;
+    GW = 90;
+*/
+
+
     #endif
 
     cout << "End club setup... \n";
@@ -388,24 +605,34 @@ double Clubs::get_club_distance() {
 }
 
 
+
 double Clubs::check_distanceV2(double distance, double good_distance , int i) {
 
-    //need to add distance
-    //check to make sure the higher club range is lower than the previous clubs low range
-    //could possibly do this by setting a temp for the first index and using club_distance[i-1] for the rest of the setup
+
+    /*
+    Check club distance for Version 2
+
+    Makes sure club distance is lower than the previous clubs distance
+
+    Also checks to make sure the club distance is atleast over 30
+    and lower than 400
+
+    Version 2 only uses one funciton for checking compared to 2
+    for version 1
+    */
 
 
-    //cout << "i = " << i <<endl;
+
+    //needs to be second club to compare
     if (i >= 1) {
 
-        //cout << "previous club distance = " << club_distancesV2[i-1] <<endl;
-        while (good_distance <= distance) {
+            while (good_distance <= distance) {
 
             cout << "\n";
             cout << "***ERROR****\n";
             cout << "\n";
 
-            cout << "Upper club distance needs to be lower than the previous clubs distance (" << club_distancesV2[i-1] << ") try again:" << '\n';
+            cout << "Club distance needs to be lower than the previous clubs distance (" << club_distancesV2[i-1] << ") try again:" << '\n';
             cin.clear();
             cin.ignore();
             cin >> distance;
@@ -415,6 +642,7 @@ double Clubs::check_distanceV2(double distance, double good_distance , int i) {
 
 
 
+    // error checking to make sure distance is in upper and lower range
     while (!cin || distance < 30.0 || distance > 400.0) {
 
         if (distance > 400) {
@@ -434,7 +662,7 @@ double Clubs::check_distanceV2(double distance, double good_distance , int i) {
             cout << "***ERROR****\n";
             cout << "\n";
 
-            cout << "Club distance must be above 20 yards, try again:" << '\n';
+            cout << "Club distance must be above 30 yards, try again:" << '\n';
             cin.clear();
             cin.ignore();
             cin >> distance;
@@ -448,15 +676,22 @@ double Clubs::check_distanceV2(double distance, double good_distance , int i) {
 
 
 
-//error checking for club distances
+
 double Clubs::check_distance(double distance, double club_distances[], int i) {
 
-    //need to add distance
-    //check to make sure the higher club range is lower than the previous clubs low range
-    //could possibly do this by setting a temp for the first index and using club_distance[i-1] for the rest of the setup
+    /*
+    Check club distance for Version 1
+
+    Makes sure the previous clubs lower distance is higher than the
+    current clubs upper distance
+
+    Also checks to make sure the club distance is atleast over 30
+    and lower than 400
+
+    */
 
 
-
+    // needs to be atleast second club
     if (i > 1) {
         while (club_distances[i - 1] < distance) {
 
@@ -473,7 +708,7 @@ double Clubs::check_distance(double distance, double club_distances[], int i) {
     }
 
 
-
+    // error checking to make sure distance is in upper and lower range
     while (!cin || distance < 30.0 || distance > 400.0) {
 
         if (distance > 400) {
@@ -493,7 +728,7 @@ double Clubs::check_distance(double distance, double club_distances[], int i) {
             cout << "***ERROR****\n";
             cout << "\n";
 
-            cout << "Club distance must be above 20 yards, try again:" << '\n';
+            cout << "Club distance must be above 30 yards, try again:" << '\n';
             cin.clear();
             cin.ignore();
             cin >> distance;
@@ -506,8 +741,19 @@ double Clubs::check_distance(double distance, double club_distances[], int i) {
 }
 
 
-
 double Clubs::check_distance2(double distance, double good_distance1, int i) {
+
+    /*
+    Check club distance for Version 1
+
+    Makes sure the previous clubs lower distance is higher than the
+    current clubs upper distance
+
+    Also checks to make sure the club distance is atleast over 30
+    and lower than 400
+
+    */
+
 
     //Error checking
     while (!cin || distance > 20.0 || distance < 400.0) {
@@ -567,20 +813,37 @@ double Clubs::check_distance2(double distance, double good_distance1, int i) {
 
 
 
-double Clubs::get_club(double t) {
+double Clubs::get_club() {
 
-    //MAKE SURE TARGET IS ABOVE LOW GAP WEDGE DISTANCE
-    //AND BELOW HIGH DRIVER DISTANCE
+    /*
+
+    Gets club choice using version 1
+
+    using a target distance entered this function
+    chooses a club based on the version 1 club setup method
+
+    also error checks to make sure target entered is
+    between upper driver distance and low gap wedge distance
+
+    */
+
+    //target
+    double t;
+
+    //gets initial target distance
+    cout << "Enter target distance you want to hit to : " << '\n';
+    cin >> t;
+
     cout << "target = " << t << '\n';
 
     //checks if target entered is higher than the upper driver limit
-    while (t > HD) {
+    while (t > HD || t < LG) {
 
         cout << "\n";
         cout << "***ERROR****\n";
         cout << "\n";
 
-        cout << "Target is greater than upper driver limit (" << HD << ") Try again:" << '\n';
+        cout << "Target must be between driver distance: (" << HD << ") and gap wedge distance: (" << LG << "). Try again:" << '\n';
         cin.clear();
         cin.ignore();
         cin >> t;
@@ -617,7 +880,7 @@ double Clubs::get_club(double t) {
         cout << "Gap/Approach Wedge is recommended " << '\n';
     }
     else {
-        cout << "No club range given for that target" << '\n';
+
     }
 
     return 0;
@@ -626,20 +889,36 @@ double Clubs::get_club(double t) {
 
 
 
-double Clubs::get_clubV2(double t) {
+double Clubs::get_clubV2() {
 
-    //MAKE SURE TARGET IS ABOVE LOW GAP WEDGE DISTANCE
-    //AND BELOW HIGH DRIVER DISTANCE
+    /*
+
+    Gets club choice using version 2
+
+    using a target distance entered this function
+    chooses a club based on the version 2 club setup method
+
+    also error checks to make sure target entered is
+    between driver distance and gap wedge distance
+
+    */
+
+    double t;
+    //gets initial target distance
+    cout << "Enter target distance you want to hit to : " << '\n';
+    cin >> t;
+
+
     cout << "target = " << t << '\n';
 
     //checks if target entered is higher than the upper driver limit
-    while (t > D) {
+    while (t > D || t < GW) {
 
         cout << "\n";
         cout << "***ERROR****\n";
         cout << "\n";
 
-        cout << "Target is greater than upper driver limit (" << D << ") Try again:" << '\n';
+        cout << "Target must be between driver distance: (" << D << ") and gap wedge distance: (" << GW << "). Try again:" << '\n';
         cin.clear();
         cin.ignore();
         cin >> t;
@@ -676,7 +955,7 @@ double Clubs::get_clubV2(double t) {
         cout << "Gap/Approach Wedge is recommended " << '\n';
     }
     else {
-        cout << "No club range given for that target" << '\n';
+
     }
 
     return 0;
@@ -691,6 +970,12 @@ double Clubs::get_clubV2(double t) {
 
 double Summary::summary(double tot_yardage, double tot_par, double tot_strokes, double i, double fairway_percent, double fairway_total, double tot_fairways_hit, double GIR_percent, double tot_GIR, double tot_putts) {
 
+    /*
+    Summary function outputs various stats after each holes.
+
+    Outputs stats such as; Overall score, total strokes, total yards, fairway hit percentage,
+    GIR (green in regulation) percentage, and total putts.
+    */
     cout << "*****************************************************" << '\n';
 
     double stroke_to_par = (tot_strokes - tot_par);
@@ -761,7 +1046,7 @@ int main(int argc, char* argv[]){
 	double tot_putts = 0;
 
 	//loop for number of holes
-	for (double i = 1; i <= x; i++) {
+	for (double i = 1; i <= 1; i++) {
 
 		//YARDAGE
 		double y;
@@ -797,7 +1082,7 @@ int main(int argc, char* argv[]){
 		// ============== GETS YARDAGE =========================
 
 
-				//get yardage for the hole
+
 		y = stats1.get_yardage(i);
 		//add total yardage
 		tot_yardage += y;
@@ -807,7 +1092,7 @@ int main(int argc, char* argv[]){
 		// ============== GETS PAR =========================
 
 
-				//get par for the hole
+
 		p = stats1.get_par(i);
 		//add total par
 		tot_par += p;
@@ -820,17 +1105,14 @@ int main(int argc, char* argv[]){
 		if (p == 4 || p == 5) {
 
 
-			//gets initial target distance
-			cout << "Enter target distance you want to hit to : " << '\n';
-			cin >> t;
-
             #if VERSION == VERSION_1
-			clubs1.get_club(t);
+			clubs1.get_club();
             #else
-            clubs1.get_clubV2(t);
+            clubs1.get_clubV2();
             #endif
 			fairway_total++;
 			f = stats1.get_fairway_hit(i);
+
 			//add total fairway hit
 			tot_fairways_hit += f;
 			//calculate percentage
@@ -845,13 +1127,12 @@ int main(int argc, char* argv[]){
 
 		// ============== GETS TARGET CLUB 2 =========================
 
-		cout << "Enter target distance you want to hit to : " << '\n';
-		cin >> t;
+
 		//gets target club
         #if VERSION == VERSION_1
-        clubs1.get_club(t);
+        clubs1.get_club();
         #else
-        clubs1.get_clubV2(t);
+        clubs1.get_clubV2();
         #endif
 
 
@@ -859,7 +1140,6 @@ int main(int argc, char* argv[]){
 
 
 
-				//get GIR
 		g = stats1.get_GIR(i);
 		//add GIR
 		tot_GIR += g;
@@ -867,12 +1147,10 @@ int main(int argc, char* argv[]){
 
 
 
-
 		// ============== GETS PUTTS =========================
 
 
 
-				//get putts
 		putts = stats1.get_putts(i);
 		//add putts
 		tot_putts += putts;
@@ -882,7 +1160,7 @@ int main(int argc, char* argv[]){
 		// ============== GETS TOTAL STROKES =========================
 
 
-				//get strokes
+
 		s = stats1.get_strokes(i);
 		//add strokes
 		tot_strokes += s;
@@ -908,17 +1186,17 @@ int main(int argc, char* argv[]){
 	string info_date;
 	string info_course;
 
-	cout << "Enter date: \n";
-	cin.ignore();
-	getline(cin, info_date);
-	cin.ignore();
 
-	cout << "Enter course name: \n";
-	cin.ignore();
-	getline(cin, info_course);
-	cin.ignore();
+    /*
 
+    Outfile summary allows the user to save the round to a text file.
 
+    The outfile feature allows the user to save all stats gathered
+    throughout the round.
+
+    Also allows the user to save the date of the round and the course played at.
+
+    */
 
 	cout << "Would you like to save your round to a text file? (Y or N): \n";
 	cin >> exp;
@@ -926,18 +1204,23 @@ int main(int argc, char* argv[]){
 
 		ofstream myfile;
 		cout << "Enter name of file: \n";
-		cin.ignore();
-		cin >> file_name;
-		cin.ignore();
 
-		//Directory test
-		//myfile.open(dir + file_name);
+        cin >> file_name;
+
+
+        cout << "Enter date: \n";
+        getline(cin, info_date);
+        cin >> info_date;
+
+        cout << "Enter course name: \n";
+        cin.ignore();
+        getline(cin, info_course);
 
 		myfile.open(file_name);
 
 
-		myfile << "Date: " << info_date << '\n';
-		myfile << "Course: " << info_course << '\n';
+		myfile << "Date:\n " << info_date << '\n';
+		myfile << "Course:\n " << info_course << '\n';
 
 		myfile << "*****************************************************" << '\n';
 		string plus = "+";
@@ -977,65 +1260,3 @@ int main(int argc, char* argv[]){
 	return 0;
 
 }
-
-// ************** END OF MAIN ***************************
-
-
-
-
-		// ============== DOCUMENTATION ==========
-
-
-
-/*
-		* represents completion
-		V1.0 *
-			- *Asks for number of holes to play
-			- *Calculates strokes, par, yardage, fairwaysand GIR
-			- *Displays strokes, par, yardage
-
-		V2.0 *
-			- *Adds error checking for input on par, yardage, fairway, GIRand number of holes to play
-			- *Add fairwayand GIR% to summary
-			- *Add putting strokes function
-			- *Make sure all error checkingand questions are same format
-
-		V3.0 *
-			- *Modify golf class to its own.h file
-			- *Add plus minus to overall par in summary display
-
-		V3.5 *
-			- *Modify.h file to separate each feature(holes, par, yardage, fairway%, GIR%, putts, strokes) into their own class
-
-		V4.0 *
-			- *Add and implement club setup class and function to get ranges of clubs
-			- *Make sure all club variables are assigned with correct inputs
-
-		V5.0 *
-			- *Add target distance with club recommendation into club setup
-			- *Modify club recommendation into own class  keep in same class
-
-		V5.5 *
-			- *Add error checking to club setup
-			- *Add error checking to target input
-			- *Add error checking for total putts
-			- *Clean up and spread out inputs
-			- *Add comments
-			- *Add yardage for the hole needs to be over atleast 75 yards not 0
-			- *Add total putts to summary
-
-		V6.0
-			- *Add outfile function
-
-        caddyTest
-            - *Move functions from the .h to the cpp
-
-        caddyTest1
-            - Create alternate version of club setup
-
-        caddyTest2
-            - Add elevation and wind functions
-
-
-
-*/
